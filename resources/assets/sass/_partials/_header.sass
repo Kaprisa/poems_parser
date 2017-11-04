@@ -1,0 +1,21 @@
+.header
+  padding: 0 10%
+  margin-bottom: 30px
+  display: flex
+  justify-content: space-between
+  align-items: center
+  background-color: $accent-color
+
+.nav
+  &__list
+    display: flex
+  &__link
+    display: block
+    padding: 17px 20px
+    color: #fffbff
+    font-weight: bold
+    font-size: 20px
+    background-color: $accent-color
+    transition: background-color .5s ease
+    &:hover
+      background-color: darken($accent-color, 30%)

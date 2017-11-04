@@ -1,0 +1,257 @@
+@import url(https://fonts.googleapis.com/css?family=Lato|Titillium+Web:300i);*::-webkit-input-placeholder {
+  color: #666;
+  opacity: 1;
+}
+
+*:-moz-placeholder {
+  color: #666;
+  opacity: 1;
+}
+
+*::-moz-placeholder {
+  color: #666;
+  opacity: 1;
+}
+
+*:-ms-input-placeholder {
+  color: #666;
+  opacity: 1;
+}
+
+*::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #F5F5F5;
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  background-color: #F5F5F5;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #FFF -webkit-gradient(linear, 40% 0%, 75% 84%, from(#b497cc), to(#8f64b3), color-stop(0.6, #684288));
+}
+
+body input:focus:required:invalid,
+body textarea:focus:required:invalid {
+  color: #666;
+}
+
+body input:required:valid,
+body textarea:required:valid {
+  color: #666;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-size: 16px;
+  min-width: 320px;
+  position: relative;
+  line-height: 1.75;
+  font-family: "Lato", sans-serif;
+  color: #211d1d;
+  background-color: #fff;
+  overflow-x: hidden;
+  opacity: 1;
+}
+
+main {
+  width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  padding: 0;
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+  color: #211d1d;
+  cursor: pointer;
+}
+
+form,
+input,
+textarea {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.title,
+.poems__title,
+.authors__title {
+  text-align: center;
+  font-family: "Titillium Web", sans-serif;
+  font-weight: 300;
+  font-size: 30px;
+  margin-bottom: 50px;
+}
+
+.section {
+  padding: 0 10%;
+  margin-bottom: 20vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.poems__title,
+.authors__title {
+  font-size: 23px;
+  margin-bottom: 25px;
+  padding-bottom: 10px;
+  position: relative;
+}
+
+.poems__title::after,
+.authors__title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 35%;
+  width: 30%;
+  height: 2px;
+  background-color: #b497cc;
+}
+
+.poems {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 0px;
+          flex: 1 1 0;
+}
+
+.poems__list {
+  max-height: 50vh;
+}
+
+.poems__author {
+  display: block;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.poems__link {
+  display: block;
+}
+
+.poems__link:first-child {
+  -webkit-transition: border .3s ease;
+  transition: border .3s ease;
+  position: relative;
+}
+
+.poems__link:first-child::after {
+  content: ' ';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background-color: #b497cc;
+  -webkit-transition: width .5s ease;
+  transition: width .5s ease;
+}
+
+.poems__link:first-child:hover::after {
+  width: 50px;
+}
+
+.authors {
+  -ms-flex-preferred-size: 33%;
+      flex-basis: 33%;
+  text-align: center;
+}
+
+.authors__list {
+  max-height: 30vh;
+}
+
+.list {
+  overflow-y: scroll;
+}
+
+.list::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #F5F5F5;
+  border-radius: 10px;
+}
+
+.list::-webkit-scrollbar {
+  width: 10px;
+  background-color: #F5F5F5;
+}
+
+.list::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #FFF -webkit-gradient(linear, 40% 0%, 75% 84%, from(#b497cc), to(#8f64b3), color-stop(0.6, #684288));
+}
+
+.list__item {
+  padding: 7px 15px;
+  border-bottom: 1px solid #b497cc;
+}
+
+.header {
+  padding: 0 10%;
+  margin-bottom: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #b497cc;
+}
+
+.nav__list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.nav__link {
+  display: block;
+  padding: 17px 20px;
+  color: #fffbff;
+  font-weight: bold;
+  font-size: 20px;
+  background-color: #b497cc;
+  -webkit-transition: background-color .5s ease;
+  transition: background-color .5s ease;
+}
+
+.nav__link:hover {
+  background-color: #684288;
+}
+
