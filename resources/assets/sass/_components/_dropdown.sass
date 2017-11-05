@@ -1,0 +1,14 @@
+.dropdown
+  &__content
+    font-size: 0
+    transform: scale(0)
+    overflow: hidden
+    transition: transform .5s linear, font-size .5s linear
+    text-align: center
+    font-style: italic
+    //font-size: 14px
+  &:hover
+    .dropdown__content
+      font-size: 14px
+      transform: scale(1)
+      margin-bottom: 10px

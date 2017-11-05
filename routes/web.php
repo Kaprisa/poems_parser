@@ -24,21 +24,29 @@ Route::get('/', function(Request $request) {
    if (strpos($request->getQueryString(), 'ajax') !== false) {
      return view('lists', ['authors'=>$authors, 'poems'=>$poems]);
    }
-   return view('welcome', ['authors'=>$authors, 'poems'=>$poems]);
+   return view('welcome', ['authors'=>$authors, 'poems'=>$poems, 'page'=>'welcome']);
 })->middleware('data');
 
 Route::get('/poem/{id}', function ($id) {
     return \App\Poem::find($id);
 });
 
-Route::get('/poems', function () {
-    $poems = App\Poem::with('category', 'author')->get();
-    return view('poems', ['poems'=>$poems]);
+Route::get('/poems', function (Request $request) {
+    $poems = App\Poem::paginate(5);
+    $data = ['poems'=>$poems, 'page'=>'poems', 'current'=>$poems->currentPage(), 'pages'=>$poems->lastPage()];
+    if (strpos($request->getQueryString(), 'ajax') !== false) {
+        return view('poems_list', $data);
+    }
+    return view('poems', $data);
 });
 
-Route::get('/authors', function () {
-    $authors = App\Author::with('category', 'author')->get();
-    return view('authors', ['authors'=>$authors]);
+Route::get('/authors', function (Request $request) {
+    $authors = App\Author::paginate(12);
+    $data = ['authors'=>$authors, 'page'=>'authors', 'current'=>$authors->currentPage(), 'pages'=>$authors->lastPage()];
+    if (strpos($request->getQueryString(), 'ajax') !== false) {
+        return view('authors_list', $data);
+    }
+    return view('authors', $data);
 });
 
 

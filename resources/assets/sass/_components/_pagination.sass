@@ -1,0 +1,22 @@
+.pagination
+  width: 100%
+  text-align: center
+  &__pages
+    margin-bottom: 10px
+  &__link
+    padding: 7px 10px
+    border: 2px solid $accent-color
+    border-radius: 8px
+    margin-right: 5px
+    transition: background-color .3s ease
+    cursor: pointer
+    font-weight: bold
+    color: #000
+    background-color: rgba($accent-color, .3)
+    &:hover, &_active
+      background-color: $accent-color
+      color: #fff
+  &__info
+    font-weight: bold
+    color: #fff
+    text-align: center

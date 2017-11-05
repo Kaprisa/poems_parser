@@ -10,16 +10,20 @@
 </head>
 <body>
     <header class="header">
+        <a href="/poemsru/public/" class="logo">
+            <img class="logo__img" src="{{ asset('images/logo.svg') }}" alt="">
+            <span class="logo__text">Poems.ru</span>
+        </a>
         <nav class="nav">
             <ul class="nav__list">
                 <li class="nav__item">
-                    <a href="/poemsru/public/" class="nav__link">Главная</a>
+                    <a href="/poemsru/public/" class="nav__link {{ $page === 'welcome' ? 'nav__link_active' : '' }}">Главная</a>
                 </li>
                 <li class="nav__item">
-                    <a href="/poemsru/public/poems" class="nav__link">Произведения</a>
+                    <a href="/poemsru/public/poems" class="nav__link {{ $page === 'poems' ? 'nav__link_active' : '' }}">Произведения</a>
                 </li>
                 <li class="nav__item">
-                    <a href="/poemsru/public/authors" class="nav__link">Авторы</a>
+                    <a href="/poemsru/public/authors" class="nav__link {{ $page === 'authors' ? 'nav__link_active' : '' }}">Авторы</a>
                 </li>
             </ul>
         </nav>

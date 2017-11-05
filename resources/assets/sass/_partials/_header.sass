@@ -11,11 +11,29 @@
     display: flex
   &__link
     display: block
-    padding: 17px 20px
+    padding: 25px 20px
     color: #fffbff
     font-weight: bold
     font-size: 20px
     background-color: $accent-color
     transition: background-color .5s ease
-    &:hover
+    font-family: "Titillium Web", sans-serif
+    font-weight: 300
+    &:hover, &_active
       background-color: darken($accent-color, 30%)
+
+.logo
+  display: flex
+  align-items: center
+  justify-content: center
+  flex-direction: column
+  transform: rotate(-15deg)
+  &__img
+    height: 45px
+    width: 50px
+  &__text
+    font-size: 20px
+    line-height: 20px
+    font-weight: 300
+    font-family: "Titillium Web", sans-serif
+    color: #ffffff

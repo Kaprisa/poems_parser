@@ -16,6 +16,7 @@ class CreateAuthorsTable extends Migration
         Schema::create('authors', function (Blueprint $table) {
             $table->increments('id');
             $table->string('identifier')->unique();
+            //$table->string('photo')->unique();
             $table->string('name');
             $table->integer('position')->unsigned()->nullable();
             $table->integer('category_id')->unsigned()->references('id')->on('categories')->default(6);

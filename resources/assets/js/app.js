@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {dynamicPopup, showPopup} from './modules/popup'
+import change_page from './modules/change_page'
 
 setInterval(() => {
     axios.get('/poemsru/public?ajax=1')
@@ -22,5 +23,7 @@ document.querySelectorAll('.poems__link').forEach(item => {
         })
     })
 })
+
+change_page('pagination');
 
 
