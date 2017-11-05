@@ -16,15 +16,29 @@
 //    curl_close($ch);
 //}
 
-Route::get('/', function() {
-   $authors = App\Author::with('category')->get()->groupBy('category_id');
-   $poems = App\Poem::with('category', 'author')->get()->groupBy('category_id');
+use Illuminate\Http\Request;
+
+Route::get('/', function(Request $request) {
+   $authors = App\Author::with('category')->where('category_id', '<>', 6)->get()->sortBy('updated_at')->take(11)->groupBy('category_id');
+   $poems = App\Poem::with('category', 'author')->get()->sortBy('updated_at')->take(50)->sortBy('position')->groupBy('category_id');
+   if (strpos($request->getQueryString(), 'ajax') !== false) {
+     return view('lists', ['authors'=>$authors, 'poems'=>$poems]);
+   }
    return view('welcome', ['authors'=>$authors, 'poems'=>$poems]);
+})->middleware('data');
+
+Route::get('/poem/{id}', function ($id) {
+    return \App\Poem::find($id);
 });
 
-Route::post('/', function () {
-    event(new \App\Listeners\UpdateTables());
-    $authors = App\Author::with('category')->get()->groupBy('category_id');
-    $poems = App\Poem::with('category', 'author')->get()->groupBy('category_id');
-    return view('lists', ['authors'=>$authors, 'poems'=>$poems]);
+Route::get('/poems', function () {
+    $poems = App\Poem::with('category', 'author')->get();
+    return view('poems', ['poems'=>$poems]);
 });
+
+Route::get('/authors', function () {
+    $authors = App\Author::with('category', 'author')->get();
+    return view('authors', ['authors'=>$authors]);
+});
+
+

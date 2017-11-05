@@ -16,10 +16,12 @@ class CreatePoemsTable extends Migration
         Schema::create('poems', function (Blueprint $table) {
             $table->increments('id');
             //$table->string('author_id')->references('id')->on('authors');
+            $table->string('identifier')->unique();
             $table->integer('author_id')->unsigned()->references('id')->on('authors');
             $table->integer('category_id')->unsigned()->references('id')->on('categories')->default(6);
             $table->integer('position')->unsigned();
             $table ->string('name');
+            $table ->text('text');
             $table->timestamps();
         });
     }

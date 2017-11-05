@@ -5,10 +5,8 @@ namespace App\Listeners;
 use App\Author;
 use App\Events\Event;
 use App\Poem;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
-class UpdateTables
+class UpdateTablesListener
 {
     /**
      * Create the event listener.
@@ -64,5 +62,13 @@ class UpdateTables
                 $this->author_create_or_update($recoms[0][$i], $recoms[2][$i], $i + 1, $index + 1);
             }
         }
+    }
+
+    public function subscribe($events)
+    {
+        $events->listen(
+            'App\Events\UpdateTablesEvent',
+            'App\Listeners\UpdateTablesListener'
+        );
     }
 }

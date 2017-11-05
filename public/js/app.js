@@ -757,15 +757,36 @@ module.exports = __webpack_require__(29);
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modules_popup__ = __webpack_require__(34);
+
 
 
 setInterval(function () {
-    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/poemsru/public/').then(function (res) {
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/poemsru/public?ajax=1').then(function (res) {
         return document.querySelector('main').innerHTML = res.data;
     }).catch(function (e) {
         return console.log(e);
     });
 }, 600000);
+
+document.querySelectorAll('.poems__link').forEach(function (item) {
+    item.addEventListener('click', function (e) {
+        e.preventDefault();
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/poemsru/public/poem/' + this.getAttribute('data-id')).then(function (res) {
+            var _res$data = res.data,
+                text = _res$data.text,
+                name = _res$data.name;
+
+            var popup = document.querySelector('.poems__popup');
+            popup.querySelector('.popup__title').innerHTML = name;
+            popup.querySelector('.popup__text').innerHTML = text;
+            Object(__WEBPACK_IMPORTED_MODULE_1__modules_popup__["b" /* showPopup */])(popup);
+        }).catch(function (e) {
+            console.error(e);
+            Object(__WEBPACK_IMPORTED_MODULE_1__modules_popup__["a" /* dynamicPopup */])({ action: 'error', msg: 'Не удалось загрузить стихотворение :(' });
+        });
+    });
+});
 
 /***/ }),
 /* 9 */
@@ -1836,6 +1857,77 @@ module.exports = function spread(callback) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export hidePopup */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return showPopup; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return dynamicPopup; });
+function hidePopup(popup) {
+    popup.classList.add('fade-out');
+    setTimeout(function () {
+        popup.style.display = 'none';
+        popup.classList.remove('fade-out');
+    }, 1000);
+}
+
+function showPopup(popup) {
+    var hide = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+    popup.classList.add('fade-in');
+    popup.style.display = 'block';
+    setTimeout(function () {
+        popup.classList.remove('fade-in');
+    }, 1000);
+    if (hide) {
+        popup.querySelector('.btn_hide-popup').addEventListener('click', function () {
+            hidePopup(popup);
+        });
+    }
+}
+
+function popup(elem, popup) {
+    elem.on('click', function () {
+        popup.classList.add('fade-in');
+        popup.style.display = 'block';
+        setTimeout(function () {
+            popup.classList.remove('fade-in');
+        }, 1000);
+    });
+    popup.querySelector('.btn_hide-popup').addEventListener('click', function () {
+        hidePopup(popup);
+    });
+}
+
+function dynamicPopup(_ref) {
+    var _ref$action = _ref.action,
+        action = _ref$action === undefined ? 'success' : _ref$action,
+        _ref$msg = _ref.msg,
+        msg = _ref$msg === undefined ? 'Успех!' : _ref$msg;
+
+    var popup = document.createElement('div');
+    popup.className = 'popup dynamic-popup dynamic-popup_' + action;
+    popup.innerHTML = '<div class="dynamic-popup__content">\n        <p class="dynamic-popup__text">' + msg + '</p>\n\t   </div>';
+    document.querySelector('body').appendChild(popup);
+    showPopup(popup, false);
+    setTimeout(function () {
+        hidePopup(popup);
+        setTimeout(function () {
+            popup.remove();
+        }, 2000);
+    }, 3000);
+}
+
+/* unused harmony default export */ var _unused_webpack_default_export = (popup);
+
+
 
 /***/ })
 /******/ ]);

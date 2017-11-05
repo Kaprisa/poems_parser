@@ -20,7 +20,7 @@ class update_data extends Command
      *
      * @var string
      */
-    protected $description = 'update some tables';
+    protected $description = 'load new poems and authors or update existing';
 
     /**
      * Create a new command instance.
@@ -37,6 +37,10 @@ class update_data extends Command
      *
      * @return mixed
      */
+
+    private function getPage($pathname = '') {
+        return iconv("windows-1251", "UTF-8", file_get_contents('http://www.stihi.ru/'.$pathname, false));
+    }
 
     private function author_create_or_update($author_link, $name, $position = null, $category = 6) {
         preg_match('#href\s*?=\s*?(["\'])([^\1]*?)\1#su', $author_link, $id_arr);
@@ -55,16 +59,25 @@ class update_data extends Command
 
     public function handle()
     {
-        $str = iconv("windows-1251", "UTF-8", file_get_contents('http://www.stihi.ru/', false));
+        $str = $this->getPage();
         preg_match_all('#<ul[^>]+?type\s*?=\s*?(["\'])square\1[^>]*?>(.*?)</ul>#su', $str, $blocks);
         foreach ([0, 1, 4] as $index) {
             preg_match_all('#<a[^>]+?class\s*?=\s*?(["\'])poemlink\1[^>]*?>(.*?)</a>#su', $blocks[0][$index], $poems);
             preg_match_all('#<a[^>]+?class\s*?=\s*?(["\'])authorlink\1[^>]*?>(.*?)</a>#su', $blocks[0][$index], $authors);
             for ($i = 0 ; $i < count($poems[2]); $i ++) {
                 $author_id = $this->author_create_or_update($authors[0][$i], $authors[2][$i]);
-                $poem = new Poem();
-                $poem->name = $poems[2][$i];
-                $poem->author_id = $author_id;
+                preg_match('#href\s*?=\s*?(["\'])([^\1]*?)\1#su', $poems[0][$i], $id_arr);
+                $id = preg_replace('#/editor/#', '', $id_arr[2]);
+                $poem = Poem::where('identifier', $id)->first();
+                if ($poem === null) {
+                    $poem = new Poem();
+                    $poem->identifier = $id;
+                    $poem->name = $poems[2][$i];
+                    $poem->author_id = $author_id;
+                    $poem_page = $this->getPage($id);
+                    preg_match('#<div[^>]+?class\s*?=\s*?(["\'])text\1[^>]*?>(.*?)</div>#su', $poem_page, $text);
+                    $poem->text = preg_replace('#&nbsp;\s?#', '', $text[2]);
+                }
                 $poem->category_id = $index + 1;
                 $poem->position = $i + 1;
                 $poem->save();
