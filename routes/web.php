@@ -15,7 +15,6 @@
 //    echo dump($info);
 //    curl_close($ch);
 //}
-
 use Illuminate\Http\Request;
 
 Route::get('/', function(Request $request) {

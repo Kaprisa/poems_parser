@@ -18,7 +18,7 @@ class LoadData
     public function handle($request, Closure $next)
     {
         if ((getdate()[0] - strtotime(DB::select('SELECT Max(updated_at) as date FROM poems')[0]->date)/60) >= 10) {
-            Artisan::call('update_data');
+            Artisan::call('data:load');
         }
         return $next($request);
     }

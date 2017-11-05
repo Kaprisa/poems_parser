@@ -5,15 +5,17 @@ namespace App\Console\Commands;
 use App\Author;
 use App\Poem;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
+use League\Flysystem\FileNotFoundException;
 
-class update_data extends Command
+class LoadData extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'update_data';
+    protected $signature = 'data:load';
 
     /**
      * The console command description.
@@ -38,9 +40,18 @@ class update_data extends Command
      * @return mixed
      */
 
-    private function getPage($pathname = '') {
+    private function get_page($pathname = '') {
         return iconv("windows-1251", "UTF-8", file_get_contents('http://www.stihi.ru/'.$pathname, false));
     }
+
+//    private function load_photo($id) {
+//        try {
+//            $contents = file_get_contents('http://www.stihi.ru/photos/'.$id.'.jpg');
+//            Storage::put('public/images/'.$id, $contents);
+//        } catch (FileNotFoundException $e) {
+//            return;
+//        }
+//    }
 
     private function author_create_or_update($author_link, $name, $position = null, $category = 6) {
         preg_match('#href\s*?=\s*?(["\'])([^\1]*?)\1#su', $author_link, $id_arr);
@@ -50,6 +61,7 @@ class update_data extends Command
             $author = new Author();
             $author->identifier = $id;
             $author->name = $name;
+            //$this->load_photo($id);
         }
         $author->position = $position;
         $author->category_id = $category;
@@ -59,7 +71,7 @@ class update_data extends Command
 
     public function handle()
     {
-        $str = $this->getPage();
+        $str = $this->get_page();
         preg_match_all('#<ul[^>]+?type\s*?=\s*?(["\'])square\1[^>]*?>(.*?)</ul>#su', $str, $blocks);
         foreach ([0, 1, 4] as $index) {
             preg_match_all('#<a[^>]+?class\s*?=\s*?(["\'])poemlink\1[^>]*?>(.*?)</a>#su', $blocks[0][$index], $poems);
@@ -74,7 +86,7 @@ class update_data extends Command
                     $poem->identifier = $id;
                     $poem->name = $poems[2][$i];
                     $poem->author_id = $author_id;
-                    $poem_page = $this->getPage($id);
+                    $poem_page = $this->get_page($id);
                     preg_match('#<div[^>]+?class\s*?=\s*?(["\'])text\1[^>]*?>(.*?)</div>#su', $poem_page, $text);
                     $poem->text = preg_replace('#&nbsp;\s?#', '', $text[2]);
                 }

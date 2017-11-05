@@ -11,14 +11,14 @@ class CreateDatabase extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'db:create';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Create new database';
 
     /**
      * Create a new command instance.

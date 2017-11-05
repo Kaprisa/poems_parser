@@ -13,7 +13,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'App\Console\Commands\update_data',
+        'App\Console\Commands\LoadData',
+        'App\Console\Commands\CreateDatabase',
+        'App\Console\Commands\Setup',
     ];
 
     /**
@@ -24,11 +26,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('update_data')
-            ->everyTenMinutes()
-            ->before(function () {
-                $this->call('migrate:refresh --seed');
-            });
+        $schedule->command('data:load')
+            ->everyTenMinutes();
     }
 
     /**

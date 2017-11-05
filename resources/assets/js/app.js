@@ -8,22 +8,45 @@ setInterval(() => {
         .catch(e => console.log(e))
 }, 600000)
 
-document.querySelectorAll('.poems__link').forEach(item => {
-    item.addEventListener('click', function (e) {
-        e.preventDefault()
-        axios.get(`/poemsru/public/poem/${this.getAttribute('data-id')}`).then(res => {
-            const { text, name } = res.data
-            const popup = document.querySelector('.poems__popup')
-            popup.querySelector('.popup__title').innerHTML = name
-            popup.querySelector('.popup__text').innerHTML = text
-            showPopup(popup)
-        }).catch(e => {
-            console.error(e)
-            dynamicPopup({ action: 'error', msg: 'Не удалось загрузить стихотворение :(' })
+window.onload = function() {
+    loadPage()
+}
+
+function loadPage() {
+    const page = location.pathname.substring(location.pathname.lastIndexOf('/') + 1, location.pathname.length)
+    switch (page) {
+        case 'poems':
+            poems()
+            break
+        case 'authors':
+            authors()
+            break
+        case '':
+            poems()
+            break
+    }
+}
+
+const poems = () => {
+    document.querySelectorAll('.poems__link').forEach(item => {
+        item.addEventListener('click', function (e) {
+            e.preventDefault()
+            axios.get(`/poemsru/public/poem/${this.getAttribute('data-id')}`).then(res => {
+                const { text, name } = res.data
+                const popup = document.querySelector('.poems__popup')
+                popup.querySelector('.popup__title').innerHTML = name
+                popup.querySelector('.popup__text').innerHTML = text
+                showPopup(popup)
+            }).catch(e => {
+                console.error(e)
+                dynamicPopup({ action: 'error', msg: 'Не удалось загрузить стихотворение :(' })
+            })
         })
     })
-})
+}
 
-change_page('pagination');
+const authors = () => {}
+
+change_page('pagination', loadPage);
 
 
