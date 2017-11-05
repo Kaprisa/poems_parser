@@ -38,7 +38,6 @@ class Setup extends Command
      */
     public function handle()
     {
-        shell_exec('composer install');
         shell_exec('npm install');
         shell_exec('npm run prod');
         Artisan::call('db:create');

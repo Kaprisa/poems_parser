@@ -15,4 +15,5 @@
 
 Установка
 -------------------
+> - composer install
 > - php artisan project:setup
