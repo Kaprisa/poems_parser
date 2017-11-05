@@ -5,8 +5,6 @@ namespace App\Console\Commands;
 use App\Author;
 use App\Poem;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Storage;
-use League\Flysystem\FileNotFoundException;
 
 class LoadData extends Command
 {
@@ -44,15 +42,6 @@ class LoadData extends Command
         return iconv("windows-1251", "UTF-8", file_get_contents('http://www.stihi.ru/'.$pathname, false));
     }
 
-//    private function load_photo($id) {
-//        try {
-//            $contents = file_get_contents('http://www.stihi.ru/photos/'.$id.'.jpg');
-//            Storage::put('public/images/'.$id, $contents);
-//        } catch (FileNotFoundException $e) {
-//            return;
-//        }
-//    }
-
     private function author_create_or_update($author_link, $name, $position = null, $category = 6) {
         preg_match('#href\s*?=\s*?(["\'])([^\1]*?)\1#su', $author_link, $id_arr);
         $id = preg_replace('#/avtor/#', '', $id_arr[2]);
@@ -61,7 +50,6 @@ class LoadData extends Command
             $author = new Author();
             $author->identifier = $id;
             $author->name = $name;
-            //$this->load_photo($id);
         }
         $author->position = $position;
         $author->category_id = $category;

@@ -20,10 +20,12 @@ use Illuminate\Http\Request;
 Route::get('/', function(Request $request) {
    $authors = App\Author::with('category')->where('category_id', '<>', 6)->get()->sortBy('updated_at')->take(11)->groupBy('category_id');
    $poems = App\Poem::with('category', 'author')->get()->sortBy('updated_at')->take(50)->sortBy('position')->groupBy('category_id');
+
    if (strpos($request->getQueryString(), 'ajax') !== false) {
      return view('lists', ['authors'=>$authors, 'poems'=>$poems]);
    }
-   return view('welcome', ['authors'=>$authors, 'poems'=>$poems, 'page'=>'welcome']);
+   $contests = \App\Contest::all();
+   return view('welcome', ['authors'=>$authors, 'poems'=>$poems, 'page'=>'welcome', 'contests'=>$contests]);
 })->middleware('data');
 
 Route::get('/poem/{id}', function ($id) {
