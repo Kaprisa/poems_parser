@@ -17,3 +17,7 @@
 -------------------
 > - composer install
 > - php artisan project:setup
+
+Затем
+-------------------
+> - Переименовать каталог на poemsru
