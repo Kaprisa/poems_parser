@@ -12,7 +12,7 @@ function changePageReq(navParentClass, page, hst = true, callback) {
         if (p > 1) {
             links[0].setAttribute('href', `${path}${p - 1}`)
         }
-        if (p < links.length - 3) {
+        if (p < links.length - 2) {
             links[links.length - 1].setAttribute('href', `${path}${p + 1}`)
         }
         document.getElementById('items-holder').innerHTML = res.data
@@ -23,7 +23,6 @@ function changePageReq(navParentClass, page, hst = true, callback) {
         if (hst){
             history.pushState(state, 'Poems.ru', state.page)
         }
-        change_page(navParentClass)
     })
 }
 

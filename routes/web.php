@@ -33,7 +33,7 @@ Route::get('/poem/{id}', function ($id) {
 });
 
 Route::get('/poems', function (Request $request) {
-    $poems = App\Poem::paginate(5);
+    $poems = App\Poem::paginate(7);
     $data = ['poems'=>$poems, 'page'=>'poems', 'current'=>$poems->currentPage(), 'pages'=>$poems->lastPage()];
     if (strpos($request->getQueryString(), 'ajax') !== false) {
         return view('poems_list', $data);

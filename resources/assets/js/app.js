@@ -2,12 +2,6 @@ import axios from 'axios'
 import {dynamicPopup, showPopup} from './modules/popup'
 import change_page from './modules/change_page'
 
-setInterval(() => {
-    axios.get('/poemsru/public?ajax=1')
-        .then((res) => document.querySelector('main').innerHTML = res.data )
-        .catch(e => console.log(e))
-}, 600000)
-
 window.onload = function() {
     loadPage()
 }
@@ -21,10 +15,22 @@ function loadPage() {
         case 'authors':
             authors()
             break
-        case '':
+        default:
+            main()
             poems()
             break
     }
+}
+
+const main = () => {
+    setInterval(() => {
+        axios.get('/poemsru/public?ajax=1')
+            .then((res) => {
+                document.querySelector('main').innerHTML = res.data
+                poems();
+            } )
+            .catch(e => console.log(e))
+    }, 600000)
 }
 
 const poems = () => {
