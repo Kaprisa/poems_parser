@@ -16,11 +16,10 @@
 > Установка
 -------------------
 > - composer install
-> - php artisan project:setup
+> - Создать БД
+> - php artisan migrate --seed
 
 > Замечания
 -------------------
 > - Переименовать каталог на poemsru( Все ссылки на фронтенде начинаются с /poemsru/public/ )
-> - Скрипт project:setup создает БД, запускает миграции
 > - Для обновления БД используйте команду php artisan migrate:refresh --seed
-> - При первой загрузке нужно немного подождать

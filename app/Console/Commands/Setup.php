@@ -51,7 +51,7 @@ class Setup extends Command
     {
         //shell_exec('npm install');
         //shell_exec('npm run prod');
-        Artisan::call('db:create');
+        //Artisan::call('db:create');
         Artisan::call('migrate');
         Artisan::call('db:seed');
         //$this->load_news();
