@@ -1,20 +1,5 @@
 <?php
 
-//Route::get('/', function () {
-//    $ch = curl_init();
-//    curl_setopt($ch, CURLOPT_URL, "http://stihi.ru");
-//    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-//    curl_setopt($ch, CURLOPT_FILETIME, 1);
-//    curl_setopt($ch, CURLOPT_HEADER, 0);
-//    $output = curl_exec($ch);
-//    if ($output === FALSE) {
-//        echo "cURL Error: " . curl_error($ch);
-//    }
-//    $info = curl_getinfo($ch);
-//    echo 'Took ' . $info['total_time'] . ' seconds for url ' . $info['url'];
-//    echo dump($info);
-//    curl_close($ch);
-//}
 use Illuminate\Http\Request;
 
 Route::get('/', function(Request $request) {
@@ -26,7 +11,7 @@ Route::get('/', function(Request $request) {
    }
    $contests = \App\Contest::all();
    return view('welcome', ['authors'=>$authors, 'poems'=>$poems, 'page'=>'welcome', 'contests'=>$contests]);
-})->middleware('data');
+})->middleware('data')->name('index');
 
 Route::get('/poem/{id}', function ($id) {
     return \App\Poem::find($id);
@@ -39,7 +24,7 @@ Route::get('/poems', function (Request $request) {
         return view('poems_list', $data);
     }
     return view('poems', $data);
-});
+})->name('poems');
 
 Route::get('/authors', function (Request $request) {
     $authors = App\Author::paginate(12);
@@ -48,6 +33,6 @@ Route::get('/authors', function (Request $request) {
         return view('authors_list', $data);
     }
     return view('authors', $data);
-});
+})->name('authors');
 
 

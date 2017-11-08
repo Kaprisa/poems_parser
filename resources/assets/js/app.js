@@ -24,7 +24,7 @@ function loadPage() {
 
 const main = () => {
     setInterval(() => {
-        axios.get('/poemsru/public?ajax=1')
+        axios.get('/?ajax=1')
             .then((res) => {
                 document.querySelector('main').innerHTML = res.data
                 poems();
@@ -37,7 +37,7 @@ const poems = () => {
     document.querySelectorAll('.poems__link').forEach(item => {
         item.addEventListener('click', function (e) {
             e.preventDefault()
-            axios.get(`/poemsru/public/poem/${this.getAttribute('data-id')}`).then(res => {
+            axios.get(`/poem/${this.getAttribute('data-id')}`).then(res => {
                 const { text, name } = res.data
                 const popup = document.querySelector('.poems__popup')
                 popup.querySelector('.popup__title').innerHTML = name
